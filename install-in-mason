@@ -7,6 +7,7 @@ setup_package_for_mason() {
   fi
 
   PACKAGE_NAME=$1
+  NVIM_APPNAME=${NVIM_APPNAME:-nvim}
 
   echo "Starting setup for $PACKAGE_NAME..."
 
@@ -30,7 +31,7 @@ setup_package_for_mason() {
 
   # Step 3: Create directories for Mason
   echo "Creating directories for Mason..."
-  MASON_PATH=~/.local/share/nvim/mason/packages/"$PACKAGE_NAME"/libexec
+  MASON_PATH=~/.local/share/"$NVIM_APPNAME"/mason/packages/"$PACKAGE_NAME"/libexec
   if mkdir -p "$MASON_PATH"; then
     echo "Directories created at $MASON_PATH."
   else
@@ -49,10 +50,10 @@ setup_package_for_mason() {
 
   # Step 5: Create wrapper script
   echo "Creating wrapper script..."
-  WRAPPER_SCRIPT=~/.local/share/nvim/mason/packages/"$PACKAGE_NAME"/"$PACKAGE_NAME"
+  WRAPPER_SCRIPT=~/.local/share/"$NVIM_APPNAME"/mason/packages/"$PACKAGE_NAME"/"$PACKAGE_NAME"
   cat << EOF > "$WRAPPER_SCRIPT"
 #!/bin/bash
-exec ~/.local/share/nvim/mason/packages/"$PACKAGE_NAME"/libexec/"$PACKAGE_NAME" "\$@"
+exec ~/.local/share/"$NVIM_APPNAME"/mason/packages/"$PACKAGE_NAME"/libexec/"$PACKAGE_NAME" "\$@"
 EOF
 
   # Step 6: Make the wrapper script executable
